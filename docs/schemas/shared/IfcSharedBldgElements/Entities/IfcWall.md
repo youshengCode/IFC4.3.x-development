@@ -27,7 +27,6 @@ There are two main representations for all occurrences:
 
 ### PredefinedType
 Predefined generic type for a wall that is specified in an enumeration. There may be a property set given specifically for the predefined types.
-> NOTE The _PredefinedType_ shall only be used, if no _IfcWallType_ is assigned, providing its own _IfcWallType.PredefinedType_.
 
 { .change-ifc2x4}
 > IFC4 CHANGE The attribute has been added at the end of the entity definition.

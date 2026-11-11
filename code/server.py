@@ -50,6 +50,7 @@ from flask import (
 )
 
 import md as mdp
+from object_typing import has_predefined_type_on_assigned_type
 from extract_concepts_from_xmi import parse_bindings
 
 import translate
@@ -1274,11 +1275,10 @@ def get_attributes(resource, builder):
             "description": process_markdown(resource, attr[3]),
             "is_inverse": not attr[0],
         }
-        if attribute["name"] == "PredefinedType" and not attribute["description"]:
-            description = "A list of types to further identify the object. Some property sets may be specifically applicable to one of these types."
-            if "Type" not in group["name"]:
-                description += "\n> NOTE  If the object has an associated IfcTypeObject with a _PredefinedType_, then this attribute shall not be used."
-            attribute["description"] = process_markdown(resource, description)
+        if attribute["name"] == "PredefinedType":
+            attribute["show_predefined_type_note"] = has_predefined_type_on_assigned_type(
+                resource, R.xmi_concepts, R.entity_supertype, R.entity_attributes,
+            )
         group["attributes"].append(attribute)
 
     total_inherited_attributes = sum([g["total_attributes"] for g in groups if g["is_inherited"]])
